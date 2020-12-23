@@ -10,7 +10,7 @@ import (
 )
 
 type HttpClient struct {
-	Method  string
+	Method  string // 支持 get form(post-form)  json(post-json)
 	Link    string
 	Headers map[string]string
 	Body    string
@@ -18,16 +18,16 @@ type HttpClient struct {
 
 func (hc HttpClient) Request() (rawResponse []byte, err error) {
 	method := strings.ToUpper(hc.Method)
-	if method == "FORM"{
+	if method == "FORM" {
 		method = "POST"
 	}
 	if hc.Headers == nil {
 		hc.Headers = make(map[string]string, 0)
 	}
-	if _,ok := hc.Headers["Content-Type"]; !ok {
+	if _, ok := hc.Headers["Content-Type"]; !ok {
 		if method == "JSON" {
 			hc.Headers["Content-Type"] = "application/json"
-		}else{
+		} else {
 			hc.Headers["Content-Type"] = "application/x-www-form-urlencoded"
 		}
 	}
