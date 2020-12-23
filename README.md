@@ -2,7 +2,7 @@
 collect golang utils
 
 
-# useage
+# useage example
 ```golang
 package main
 
@@ -13,6 +13,6 @@ import (
 )
 
 func main(){
-  log.Println(timetool.DateFormart(time.Now(), "YYYY-MM-DD HH:mm:ss"))
+  log.Println(timetool.DateFormat(time.Now(), "YYYY-MM-DD HH:mm:ss"))
 }
 ```
