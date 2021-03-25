@@ -22,12 +22,12 @@ var Db *sql.DB
 func (c Config) Init() (*sql.DB, error) {
     var err error
     sqlDsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true&charset=%s",
-        Config.User,
-        Config.Password,
-        Config.Host,
-        Config.Port,
-        Config.Database,
-        Config.Charset,
+        c.User,
+        c.Password,
+        c.Host,
+        c.Port,
+        c.Database,
+        c.Charset,
     )
     Db, err = sql.Open("mysql", sqlDsn)
     if err != nil {
