@@ -57,7 +57,7 @@ func (hc HttpClient) Request() ([]byte, error) {
     hc.Method = strings.ToUpper(hc.Method)
     req, err := http.NewRequest(hc.Method, hc.Link, strings.NewReader(hc.Body))
     if err != nil {
-        errMsg := fmt.Sprintf("request %s error: %s", hc.Link, err.Error())
+        errMsg := fmt.Sprintf("build request %s error: %s", hc.Link, err.Error())
         err = errors.New(errMsg)
         return nil, err
     }
@@ -65,8 +65,18 @@ func (hc HttpClient) Request() ([]byte, error) {
         req.Header.Set(key, val)
     }
     resp, err := client.Do(req)
+    if err != nil {
+        errMsg := fmt.Sprintf("request %s error: %s", hc.Link, err.Error())
+        err = errors.New(errMsg)
+        return nil, err
+    }
     defer resp.Body.Close()
     rawResponse, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        errMsg := fmt.Sprintf("read %s error: %s", hc.Link, err.Error())
+        err = errors.New(errMsg)
+        return nil, err
+    }
     if resp.StatusCode != 200 {
         errMsg := fmt.Sprintf("request %s response code: %d\n%s\n", hc.Link, resp.StatusCode, string(rawResponse))
         err = errors.New(errMsg)
