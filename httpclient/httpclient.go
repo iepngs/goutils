@@ -8,7 +8,6 @@ import (
     "fmt"
     "io"
     "io/ioutil"
-    "log"
     "net/http"
     "net/url"
     "os"
@@ -66,12 +65,7 @@ func (hc HttpClient) Request() ([]byte, error) {
         req.Header.Set(key, val)
     }
     resp, err := client.Do(req)
-    defer func() {
-        err = resp.Body.Close()
-        if err != nil {
-            log.Println(err)
-        }
-    }()
+    defer resp.Body.Close()
     rawResponse, err := ioutil.ReadAll(resp.Body)
     if resp.StatusCode != 200 {
         errMsg := fmt.Sprintf("request %s response code: %d\n%s\n", hc.Link, resp.StatusCode, string(rawResponse))
