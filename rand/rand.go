@@ -2,6 +2,8 @@ package rand
 
 import (
     "bytes"
+    "math"
+    "math/big"
     "math/rand"
     "strings"
     "time"
